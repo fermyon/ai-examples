@@ -1,0 +1,17 @@
+spin_manifest_version = "1"
+authors = ["Matt Butcher <matt.butcher@fermyon.com>"]
+description = ""
+name = "newsfeeder"
+trigger = { type = "http", base = "/" }
+version = "0.1.0"
+
+[[component]]
+id = "newsfeeder"
+source = "target/newsfeeder.wasm"
+exclude_files = ["**/node_modules"]
+allowed_http_hosts = ["techcrunch.com"]
+ai_models = ["llama2-chat"]
+[component.trigger]
+route = "/..."
+[component.build]
+command = "npm run build"
