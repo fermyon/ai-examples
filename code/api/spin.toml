@@ -1,0 +1,17 @@
+spin_manifest_version = "1"
+authors = ["Ryan Levick <me@ryanlevick.com>"]
+description = ""
+name = "code"
+trigger = { type = "http", base = "/" }
+version = "0.1.0"
+
+[[component]]
+id = "code"
+source = "../target/wasm32-wasi/release/code.wasm"
+allowed_http_hosts = []
+ai_models = ["codellama-instruct"]
+[component.trigger]
+route = "/..."
+[component.build]
+command = "cargo build --target wasm32-wasi --release"
+watch = ["src/**/*.rs", "Cargo.toml"]
