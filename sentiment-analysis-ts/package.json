@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@fermyon/spin-sdk": "file:/Users/caleb/fermyon/spin-js-sdk/spin-sdk",
+    "@fermyon/spin-sdk": "file:/Users/USER_NAME/fermyon/spin-js-sdk/spin-sdk",
     "ts-loader": "^9.4.1",
     "typescript": "^4.8.4",
     "webpack": "^5.74.0",
