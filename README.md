@@ -1,4 +1,4 @@
-# AI Examples
+# Fermyon Serverless AI Examples
 
 This repository contains examples of using[Fermyon Serverless AI](https://developer.fermyon.com/cloud/serverless-ai). To get started, follow [these instructions](https://developer.fermyon.com/spin/serverless-ai-tutorial) to make sure you have installed the correct version of Spin and the necessary SDKs. If you'd like to learn more about the API, visit the [API guide here](https://developer.fermyon.com/spin/serverless-ai-api-guide).
 
