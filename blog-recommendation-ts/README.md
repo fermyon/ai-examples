@@ -23,10 +23,6 @@ turso db shell <db-name>
 - CREATE virtual TABLE vss_blog_posts USING vss0(embedding(384));
 ```
 
-- Replace the contents of `build` and `@fermyon/spin-sdk` in the dependencies to point at the correct local path as shown in the earlier notion document.. 
-
-- Run using the spin binary with llm support built earlier (replace paths appropriately).
-
 ```bash
 npm install
 ~/Work/fermyon/spin/target/release/spin  build -u --runtime-config-file runtime-config.toml --sqlite @migrations.sql
