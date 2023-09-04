@@ -1,13 +1,6 @@
 ## Blog recommendation 
 
-This is a example application showcasing a recommendation system for blogs
-
-### Prereqs 
-
-- build spin from the `llm-sdk` branch
-- build spin-js-sdk from `add_sdk` branch of https://github.com/karthik2804/spin-js-sdk
-
-see [notion document](https://www.notion.so/fermyon/Spin-AI-Inferencing-Setup-e86964bf27fe48bdaf68d374d23b0e51) for more information.
+This is a example application showcasing a recommendation system for blogs. Please make sure you've followed prerequiste instructions from the [parent README](../README.md) before following steps below
 
 ### Steps to use
 
