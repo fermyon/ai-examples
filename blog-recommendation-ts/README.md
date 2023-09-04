@@ -1,13 +1,6 @@
 ## Blog recommendation 
 
-This is a example application showcasing a recommendation system for blogs
-
-### Prereqs 
-
-- build spin from the `llm-sdk` branch
-- build spin-js-sdk from `add_sdk` branch of https://github.com/karthik2804/spin-js-sdk
-
-see [notion document](https://www.notion.so/fermyon/Spin-AI-Inferencing-Setup-e86964bf27fe48bdaf68d374d23b0e51) for more information.
+This is a example application showcasing a recommendation system for blogs. Please make sure you've followed prerequiste instructions from the [parent README](../README.md) before following steps below
 
 ### Steps to use
 
@@ -29,10 +22,6 @@ turso db tokens create <db-name> --expiration none
 turso db shell <db-name>
 - CREATE virtual TABLE vss_blog_posts USING vss0(embedding(384));
 ```
-
-- Replace the contents of `build` and `@fermyon/spin-sdk` in the dependencies to point at the correct local path as shown in the earlier notion document.. 
-
-- Run using the spin binary with llm support built earlier (replace paths appropriately).
 
 ```bash
 npm install

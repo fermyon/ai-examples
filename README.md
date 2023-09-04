@@ -12,4 +12,4 @@ Here is a table of the following examples:
 | [newsfeeder-ts](./newsfeeder-ts/)  | Typescript  |   :white_check_mark:  | :red_circle:  |  :red_circle:  |
 | [sentiment-analysis-ts](./sentiment-analysis-ts/)  |  Typescript | :white_check_mark:  | :red_circle:  |  :red_circle:  |
 | [silly-walk-ts](./silly-walk-ts/)  | Typescript | :white_check_mark:  | :red_circle:  |  :red_circle:  |
-| [blog-recommendation](./blog-recommendation/)  | Typescript | :red_circle:  | :white_check_mark:  |  :white_check_mark:  |
+| [blog-recommendation-ts](./blog-recommendation-ts/)  | Typescript | :red_circle:  | :white_check_mark:  |  :white_check_mark:  |
