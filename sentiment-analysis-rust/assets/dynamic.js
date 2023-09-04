@@ -64,8 +64,10 @@ function updateCard(cardIndex, sentence, sentiment) {
     badge = `<span class="badge badge-success">Positive</span>`;
   } else if (sentiment === "negative") {
     badge = `<span class="badge badge-error">Negative</span>`;
-  } else {
+  } else if (sentiment === "neutral") {
     badge = `<span class="badge badge-ghost">Neutral</span>`;
+  } else {
+    badge = `<span class="badge badge-ghost">Unsure</span>`;
   }
   var cardElement = document.getElementById("card-" + cardIndex);
   cardElement.innerHTML = `
