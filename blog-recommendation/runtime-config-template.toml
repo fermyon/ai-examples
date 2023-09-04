@@ -1,0 +1,5 @@
+# This tells Spin to use the remote host as its default database
+[sqlite_database.default]
+type = "libsql"
+url = "https://<database-name>.turso.io"
+token = "<Turso token>"
