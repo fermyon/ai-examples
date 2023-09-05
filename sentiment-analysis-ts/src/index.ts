@@ -26,35 +26,36 @@ You are a bot that generates sentiment analysis responses. Respond with a single
 [INST]
 Follow the pattern of the following examples:
 
-Hi, my name is Bob
-neutral
+User: Hi, my name is Bob
+Bot: neutral
 
-I am so happy today
-positive
+User: I am so happy today
+Bot: positive
 
-I am so sad today
-negative
+User: I am so sad today
+Bot: negative
 [/INST]
 
-<SENTENCE>
+User: {SENTENCE}
 `;
 
 async function performSentimentAnalysis(request: HttpRequest) {
   // Parse sentence out of request
   let data = request.json() as SentimentAnalysisRequest;
-  let sentence = data.sentence;
+  let sentence = data.sentence.trim();
   console.log("Performing sentiment analysis on: " + sentence);
 
   // Prepare the KV store
   let kv = Kv.openDefault();
 
   // If the sentiment of the sentence is already in the KV store, return it
-  if (kv.exists(sentence)) {
+  let cachedSentiment = kv.get(sentence);
+  if (cachedSentiment !== null) {
     console.log("Found sentence in KV store returning cached sentiment");
     return {
       status: 200,
       body: JSON.stringify({
-        sentiment: decoder.decode(kv.get(sentence)),
+        sentiment: decoder.decode(cachedSentiment),
       } as SentimentAnalysisResponse),
     };
   }
@@ -62,29 +63,31 @@ async function performSentimentAnalysis(request: HttpRequest) {
 
   // Otherwise, perform sentiment analysis
   console.log("Running inference");
-  let options: InferencingOptions = { maxTokens: 10, temperature: 0.5 };
+  let options: InferencingOptions = { max_tokens: 6 };
   let inferenceResult = Llm.infer(
     InferencingModels.Llama2Chat,
-    PROMPT.replace("<SENTENCE>", sentence),
+    PROMPT.replace("{SENTENCE}", sentence),
     options
   );
   console.log(
     `Inference result (${inferenceResult.usage.generatedTokenCount} tokens): ${inferenceResult.text}`
   );
-  let sentiment = inferenceResult.text.split(/\s+/)[0]?.trim();
+  let sentiment = inferenceResult.text.split(/\s+/)[1]?.trim();
 
   // Clean up result from inference
   if (
     sentiment === undefined ||
     !["negative", "neutral", "positive"].includes(sentiment)
   ) {
-    sentiment = "neutral";
-    console.log("Invalid sentiment, marking it as neutral");
+    sentiment = "unsure";
+    console.log("Invalid sentiment, marking it as unsure");
   }
 
   // Cache the result in the KV store
-  console.log("Caching sentiment in KV store");
-  kv.set(sentence, sentiment);
+  if (sentiment === "unsure") {
+    console.log("Caching sentiment in KV store");
+    kv.set(sentence, sentiment);
+  }
 
   return {
     status: 200,
