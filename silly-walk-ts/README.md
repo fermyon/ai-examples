@@ -4,8 +4,16 @@ This is a minimal example of using the Fermyon Serverless AI inside of your serv
 
 The code is in `src/index.ts`
 
+⚠️ **Note**: This requires a canary build of the `js2wasm` plugin. Use the following command to install it:
+
+```bash
+$ spin plugins install -u https://github.com/fermyon/spin-js-sdk/releases/download/canary/js2wasm.json
+```
+
 ## Building and Running
 
-> This version is pre-release, so you will need to edit package.json to point to your JS SDK.
-
-In this directory, run `npm install` followed by `spin build`. You can run it locally with `spin up`, but unless you have a very powerful system, this will be slow. To deploy to Fermyon Cloud and use Serverless AI, do a `spin deploy`.
+```bash
+$ npm install 
+$ spin build
+$ spin up
+```

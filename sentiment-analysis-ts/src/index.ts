@@ -57,7 +57,7 @@ async function performSentimentAnalysis(request: HttpRequest) {
 
   // Otherwise, perform sentiment analysis
   console.log("Running inference");
-  let options: InferencingOptions = { max_tokens: 10, temperature: 0.5 };
+  let options: InferencingOptions = { maxTokens: 10, temperature: 0.5 };
   let inferenceResult = Llm.infer(
     InferencingModels.Llama2Chat,
     PROMPT.replace("<SENTENCE>", sentence),
