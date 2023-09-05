@@ -84,7 +84,7 @@ async function performSentimentAnalysis(request: HttpRequest) {
   }
 
   // Cache the result in the KV store
-  if (sentiment === "unsure") {
+  if (sentiment !== "unsure") {
     console.log("Caching sentiment in KV store");
     kv.set(sentence, sentiment);
   }
