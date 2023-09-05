@@ -2,6 +2,12 @@
 
 This is a example application showcasing a recommendation system for blogs. Please make sure you've followed prerequiste instructions from the [parent README](../README.md) before following steps below
 
+⚠️ **Note**: This requires a canary build of the `js2wasm` plugin. Use the following command to install it:
+
+```bash
+$ spin plugins install -u https://github.com/fermyon/spin-js-sdk/releases/download/canary/js2wasm.json
+```
+
 ### Steps to use
 
 - Create a turso db using personal account and get configs
@@ -19,13 +25,13 @@ turso db tokens create <db-name> --expiration none
 - Shell into Turso Db to create virtual table using the `vss` module
 
 ```bash
-turso db shell <db-name>
+$ turso db shell <db-name>
 - CREATE virtual TABLE vss_blog_posts USING vss0(embedding(384));
 ```
 
 ```bash
-npm install
-~/Work/fermyon/spin/target/release/spin  build -u --runtime-config-file runtime-config.toml --sqlite @migrations.sql
+$ npm install
+$ spin  build -u --runtime-config-file runtime-config.toml --sqlite @migrations.sql
 ```
 
 - Create embeddings for all the posts

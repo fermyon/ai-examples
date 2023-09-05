@@ -2,16 +2,22 @@
 
 This repository contains an API that performs sentiment analysis and a simple UI to interact with it.
 
-## Setup
+⚠️ **Note**: This requires a canary build of the `js2wasm` plugin. Use the following command to install it:
 
-TODO: Currently this demo is hardcoded to work on my machine.
+```bash
+$ spin plugins install -u https://github.com/fermyon/spin-js-sdk/releases/download/canary/js2wasm.json
+```
 
-## Testing
+## Build and Running 
 
-After you've started the app locally you can test the API via:
+```bash
+$ npm install 
+$ spin build
+$ spin up
+```
 
-```sh
-curl --json '{"sentence": "Worst day ever"}' http://localhost:3000/api/sentiment-analysis
+```bash
+$ curl --json '{"sentence": "Worst day ever"}' http://localhost:3000/api/sentiment-analysis
 ```
 
 You can access the UI at http://localhost:3000. The KV-Explorer can be found at http://localhost:3000/internal/kv-explorer.
