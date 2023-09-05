@@ -42,7 +42,7 @@ User: {SENTENCE}
 func init() {
 	spinhttp.Handle(func(w http.ResponseWriter, r *http.Request) {
 		router := spinhttp.NewRouter()
-		router.POST("/sentiment-analysis", performSentimentAnalysis)
+		router.POST("/api/sentiment-analysis", performSentimentAnalysis)
 		router.ServeHTTP(w, r)
 	})
 }
