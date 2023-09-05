@@ -20,11 +20,11 @@ pub struct SentimentAnalysisResponse {
     pub sentiment: String,
 }
 
-const PROMPT: &str = r#"\
+const PROMPT: &str = r#"
 <<SYS>>
 You are a bot that generates sentiment analysis responses. Respond with a single positive, negative, or neutral.
 <</SYS>>
-<INST>
+[INST]
 Follow the pattern of the following examples:
 
 User: Hi, my name is Bob
@@ -35,7 +35,7 @@ Bot: positive
 
 User: I am so sad today
 Bot: negative
-</INST>
+[/INST]
 
 User: {SENTENCE}
 "#;
@@ -65,15 +65,13 @@ fn perform_sentiment_analysis(req: Request, _params: Params) -> Result<Response>
     let kv = Store::open_default()?;
 
     // If the sentiment of the sentence is already in the KV store, return it
-    if kv.exists(sentence).unwrap_or(false) {
+    if let Ok(sentiment) = kv.get(sentence) {
         println!("Found sentence in KV store returning cached sentiment");
-        let sentiment = kv.get(sentence)?;
         let resp = SentimentAnalysisResponse {
             sentiment: String::from_utf8(sentiment)?,
         };
-        let resp_str = serde_json::to_string(&resp)?;
 
-        return send_ok_response(200, resp_str)
+        return send_ok_response(200, resp);
     }
     println!("Sentence not found in KV store");
 
@@ -110,14 +108,13 @@ fn perform_sentiment_analysis(req: Request, _params: Params) -> Result<Response>
             .unwrap_or_default(),
     };
 
-    let resp_str = serde_json::to_string(&resp)?;
-    send_ok_response(200, resp_str)
+    send_ok_response(200, resp)
 }
 
-fn send_ok_response(code: u16, resp_str: String) -> Result<Response> {
+fn send_ok_response(code: u16, resp: SentimentAnalysisResponse) -> Result<Response> {
     Ok(http::Response::builder()
-    .status(code)
-    .body(Some(resp_str.into()))?)
+        .status(code)
+        .body(Some(serde_json::to_string(&resp)?.into()))?)
 }
 
 fn body_json_to_map(req: &Request) -> Result<SentimentAnalysisRequest> {
