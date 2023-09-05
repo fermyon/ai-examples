@@ -28,6 +28,7 @@ route = "/internal/kv-explorer/..."
 [[component]]
 source = { url = "https://github.com/fermyon/spin-fileserver/releases/download/v0.0.1/spin_static_fs.wasm", digest = "sha256:650376c33a0756b1a52cad7ca670f1126391b79050df0321407da9c741d32375" }
 id = "ui"
-files = [ { source = "assets", destination = "/" } ]
+files = [{ source = "../sentiment-analysis-assets", destination = "/" }]
 [component.trigger]
 route = "/..."
+
