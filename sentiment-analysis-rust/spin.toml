@@ -9,7 +9,7 @@ version = "0.1.0"
 id = "sentiment-analysis"
 source = "target/wasm32-wasi/release/http_rust_hello.wasm"
 key_value_stores = ["default"]
-ai_models = ["llama2-chat", "all-minilm-l6-v2"]
+ai_models = ["llama2-chat"]
 [component.trigger]
 route = "/api/..."
 [component.build]

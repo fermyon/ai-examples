@@ -55,7 +55,7 @@ fn not_found(_: Request, _: Params) -> Result<Response> {
         .body(Some("Not found".into()))?)
 }
 
-fn perform_sentiment_analysis(req: Request, _: Params) -> Result<Response> {
+fn perform_sentiment_analysis(req: Request, _params: Params) -> Result<Response> {
     let request = body_json_to_map(&req)?;
     // Do some basic clean up on the input
     let sentence = request.sentence.trim();
@@ -69,13 +69,11 @@ fn perform_sentiment_analysis(req: Request, _: Params) -> Result<Response> {
         println!("Found sentence in KV store returning cached sentiment");
         let sentiment = kv.get(sentence)?;
         let resp = SentimentAnalysisResponse {
-            sentiment: std::str::from_utf8(&sentiment)?.to_string(),
+            sentiment: String::from_utf8(sentiment)?,
         };
         let resp_str = serde_json::to_string(&resp)?;
 
-        return Ok(http::Response::builder()
-            .status(200)
-            .body(Some(resp_str.into()))?);
+        return send_ok_response(200, resp_str)
     }
     println!("Sentence not found in KV store");
 
@@ -102,7 +100,7 @@ fn perform_sentiment_analysis(req: Request, _: Params) -> Result<Response> {
 
     if let Ok(sentiment) = sentiment {
         println!("Caching sentiment in KV store");
-        kv.set(sentence, sentiment)?;
+        let _ = kv.set(sentence, sentiment);
     }
     // Cache the result in the KV store
     let resp = SentimentAnalysisResponse {
@@ -113,18 +111,22 @@ fn perform_sentiment_analysis(req: Request, _: Params) -> Result<Response> {
     };
 
     let resp_str = serde_json::to_string(&resp)?;
+    send_ok_response(200, resp_str)
+}
+
+fn send_ok_response(code: u16, resp_str: String) -> Result<Response> {
     Ok(http::Response::builder()
-        .status(200)
-        .body(Some(resp_str.into()))?)
+    .status(code)
+    .body(Some(resp_str.into()))?)
 }
 
 fn body_json_to_map(req: &Request) -> Result<SentimentAnalysisRequest> {
     let body = match req.body().as_ref() {
-        Some(bytes) => bytes.slice(..),
-        None => bytes::Bytes::default(),
+        Some(bytes) => bytes,
+        None => anyhow::bail!("Request body was unexpectedly empty"),
     };
 
-    Ok(serde_json::from_slice::<SentimentAnalysisRequest>(&body)?)
+    Ok(serde_json::from_slice(&body)?)
 }
 
 #[derive(Copy, Clone, Debug)]
