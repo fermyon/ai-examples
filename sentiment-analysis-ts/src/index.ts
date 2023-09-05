@@ -63,7 +63,7 @@ async function performSentimentAnalysis(request: HttpRequest) {
 
   // Otherwise, perform sentiment analysis
   console.log("Running inference");
-  let options: InferencingOptions = { max_tokens: 6 };
+  let options: InferencingOptions = { maxTokens: 6 };
   let inferenceResult = Llm.infer(
     InferencingModels.Llama2Chat,
     PROMPT.replace("{SENTENCE}", sentence),
@@ -106,7 +106,7 @@ router.post("/api/sentiment-analysis", async (_, req) => {
 });
 
 // Catch all 404 handler
-router.all("/api/*", async (_, req) => {
+router.all("/api/*", async (_, _req) => {
   return {
     status: 404,
     body: "Not found",
@@ -114,7 +114,7 @@ router.all("/api/*", async (_, req) => {
 });
 
 // Entry point to the Spin handler
-export const handleRequest: HandleRequest = async function (
+export const handleRequest: HandleRequest = async function(
   request: HttpRequest
 ): Promise<HttpResponse> {
   return await router.handleRequest(request, request);
