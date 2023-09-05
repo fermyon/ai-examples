@@ -74,18 +74,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "http-rust-hello"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "bytes",
- "http",
- "serde",
- "serde_json",
- "spin-sdk",
-]
-
-[[package]]
 name = "id-arena"
 version = "2.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -194,6 +182,18 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b0293b4b29daaf487284529cc2f5675b8e57c61f70167ba415a463651fd6a918"
 
 [[package]]
+name = "sentiment-analysis"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "bytes",
+ "http",
+ "serde",
+ "serde_json",
+ "spin-sdk",
+]
+
+[[package]]
 name = "serde"
 version = "1.0.188"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -247,6 +247,7 @@ dependencies = [
 [[package]]
 name = "spin-macro"
 version = "0.1.0"
+source = "git+https://github.com/fermyon/spin?branch=llm-sdk#ca520925df9dd57524041a0cecbed704341253a9"
 dependencies = [
  "anyhow",
  "bytes",
@@ -259,6 +260,7 @@ dependencies = [
 [[package]]
 name = "spin-sdk"
 version = "1.5.0-pre0"
+source = "git+https://github.com/fermyon/spin?branch=llm-sdk#ca520925df9dd57524041a0cecbed704341253a9"
 dependencies = [
  "anyhow",
  "bytes",

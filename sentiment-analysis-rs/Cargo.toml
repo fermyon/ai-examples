@@ -1,7 +1,7 @@
 [package]
-name = "http-rust-hello"
-authors = ["Rajat Jindal <rajatjindal83@gmail.com>"]
-description = ""
+name = "sentiment-analysis"
+authors = ["Rajat Jindal <rajat.jindal@fermyon.com>"]
+description = "A sentiment analysis API that demonstrates using LLM inference and KV stores together"
 version = "0.1.0"
 edition = "2021"
 
@@ -19,6 +19,6 @@ serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0.85"
 
 # The Spin SDK.
-spin-sdk = { path = "../../spin/sdk/rust" }
+spin-sdk = { git = "https://github.com/fermyon/spin", branch = "llm-sdk" }
 
 [workspace]
