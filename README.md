@@ -14,3 +14,4 @@ Here is a table of the following examples:
 | [sentiment-analysis-rs](./sentiment-analysis-rs/)  |  Rust | :white_check_mark:  | :red_circle:  |  :red_circle:  |
 | [silly-walk-ts](./silly-walk-ts/)  | Typescript | :white_check_mark:  | :red_circle:  |  :red_circle:  |
 | [blog-recommendation-ts](./blog-recommendation-ts/)  | Typescript | :red_circle:  | :white_check_mark:  |  :white_check_mark:  |
+| [openapi-rs](./openapi-rs/) | Rust |  :white_check_mark:  | :red_circle:  |  :red_circle:  |

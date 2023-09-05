@@ -1,0 +1,3 @@
+target/
+.spin/
+swagger-ui/openapi.yml

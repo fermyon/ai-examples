@@ -1,0 +1,106 @@
+openapi: 3.0.0
+info:
+  title: Spin LLM API
+  version: 1.0.0
+  description: |
+    This API provides access to the Spin LLM model.
+servers:
+  - url: http://127.0.0.1:3000/api
+paths:
+  /infer:
+    post:
+      tags:
+        - infer
+      summary: Request an inference from the LLM model.
+      requestBody:
+        description: Request body for inferencing
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - "user_prompt"
+              properties:
+                model:
+                  type: string
+                  title: "Model"
+                  description: "The model to use for generating the response."
+                  default: "llama2-chat"
+                  example: "llama2-chat"
+                system_prompt:
+                  type: string
+                  title: "System Prompt"
+                  description: "The system prompt."
+                  default: |
+                    You are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe.  Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.
+
+                    If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information.
+                  example: |
+                    You are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe.  Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.
+
+                    If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information.
+                user_prompt:
+                  type: string
+                  title: "User Prompt"
+                  description: "The user prompt."
+                  example: "What is your name?"
+                options:
+                  type: object
+                  title: Options
+                  description: "Inferencing options."
+                  properties:
+                    max_tokens:
+                      type: integer
+                      description: "The maximum number of tokens in the generated response."
+                      default: 75
+                      example: 75
+                    repeat_penalty:
+                      type: number
+                      description: "The repeat penalty for generated tokens."
+                      default: 1.1
+                      example: 1.1
+                    repeat_penalty_last_n_token_count:
+                      type: integer
+                      description: "The last N token count for repeat penalty."
+                      default: 64
+                      example: 64
+                    temperature:
+                      type: number
+                      description: "The temperature for text generation."
+                      default: 1.0
+                      example: 1.0
+                    top_k:
+                      type: integer
+                      description: "The top-k value for token selection."
+                      default: 40
+                      example: 40
+                    top_p:
+                      type: number
+                      description: "The top-p value for token selection."
+                      default: 0.9
+                      example: 0.9
+      responses:
+        '200':
+          description: "Successful response"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  text:
+                    type: string
+                    title: "Text"
+                    description: "The generated text response."
+                  usage:
+                    type: object
+                    properties:
+                      prompt_token_count:
+                        type: integer
+                        title: "Prompt Token Count"
+                        description: "The number of tokens in the prompt."
+                        example: 
+                      generated_token_count:
+                        type: integer
+                        title: "Generated Token Count"
+                        description: "The number of tokens generated in the response."
