@@ -108,7 +108,7 @@ fn handle_infer(req: Request, _params: Params) -> Result<Response> {
         serde_json::from_slice(req.body().as_ref().unwrap_or(&Bytes::new()))?;
     let model: spin_sdk::llm::InferencingModel = match request.model.as_deref() {
         Some("llama2-chat") => spin_sdk::llm::InferencingModel::Llama2Chat,
-        Some("llama2-code") => spin_sdk::llm::InferencingModel::CodellamaInstruct,
+        Some("codellama-instruct") => spin_sdk::llm::InferencingModel::CodellamaInstruct,
         Some(other) => spin_sdk::llm::InferencingModel::Other(other),
         None => spin_sdk::llm::InferencingModel::Other(DEFAULT_MODEL),
     };
