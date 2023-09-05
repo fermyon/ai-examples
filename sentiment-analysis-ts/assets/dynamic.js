@@ -41,7 +41,7 @@ function newCard() {
 
   console.log("Running inference on sentence: " + sentence);
   runningInference = true;
-  fetch("http://localhost:3000/api/sentiment-analysis", {
+  fetch("/api/sentiment-analysis", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -64,8 +64,10 @@ function updateCard(cardIndex, sentence, sentiment) {
     badge = `<span class="badge badge-success">Positive</span>`;
   } else if (sentiment === "negative") {
     badge = `<span class="badge badge-error">Negative</span>`;
-  } else {
+  } else if (sentiment === "neutral") {
     badge = `<span class="badge badge-ghost">Neutral</span>`;
+  } else {
+    badge = `<span class="badge badge-ghost">Unsure</span>`;
   }
   var cardElement = document.getElementById("card-" + cardIndex);
   cardElement.innerHTML = `
