@@ -5,12 +5,14 @@
 This is an example of building a prompt from an RSS feed, and then sending it to Fermyon Serverless AI. It is written in TypeScript
 
 It uses the HTTP rest extension to get an RSS feed from TechCrunch, then it parses the result and builds a prompt, which it sends to Serverless AI.
-
-⚠️ **Note**: This requires a canary build of the `js2wasm` plugin. Use the following command to install it:
+⚠️ **Note**: This requires v0.6.0 or later of the `js2wasm` plugin. Use the following commands to install it:
 
 ```bash
-$ spin plugins install -u https://github.com/fermyon/spin-js-sdk/releases/download/canary/js2wasm.json
+$ spin plugin update
+$ spin plugin install js2wasm
 ```
+
+(If you have previously installed the `canary` version of the plugin, you may need to uninstall first with `spin plugin uninstall js2wasm`.)
 
 ## Building and Running
 
