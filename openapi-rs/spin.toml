@@ -1,0 +1,26 @@
+spin_manifest_version = "1"
+authors = ["Justin Pflueger <justin.pflueger@fermyon.com>"]
+description = "A re-usable Spin component that enables the LLM API to be used as an OpenAPI service."
+name = "openapi"
+trigger = { type = "http", base = "/" }
+version = "0.1.0"
+
+[[component]]
+id = "openapi"
+source = "api/target/wasm32-wasi/release/openapi.wasm"
+exclude_files = ["**/node_modules"]
+ai_models = ["llama2-chat"]
+[component.trigger]
+route = "/api/..."
+[component.build]
+command = "cargo build --target wasm32-wasi --release"
+workdir = "api"
+
+[[component]]
+source = { url = "https://github.com/fermyon/spin-fileserver/releases/download/v0.0.3/spin_static_fs.wasm", digest = "sha256:38bf971900228222f7f6b2ccee5051f399adca58d71692cdfdea98997965fd0d" }
+id = "swagger-ui"
+files = [{ source = "swagger-ui", destination = "/" }]
+[component.trigger]
+route = "/..."
+[component.build]
+command = "cp openapi.yml swagger-ui/openapi.yml"
