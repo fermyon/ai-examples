@@ -1,5 +1,5 @@
 // Listen for the Enter key being pressed
-document.addEventListener("keydown", function (event) {
+document.addEventListener("keydown", function(event) {
   if (event.keyCode === 13) {
     newCard();
   }
@@ -91,7 +91,7 @@ function setAlert(msg) {
         <span class="text-error-content">${msg}</span>
     </div>
     `;
-  setTimeout(function () {
+  setTimeout(function() {
     alertElement.innerHTML = "";
   }, 3000);
 }
