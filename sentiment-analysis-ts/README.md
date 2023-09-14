@@ -2,11 +2,14 @@
 
 This repository contains an API that performs sentiment analysis and a simple UI to interact with it.
 
-⚠️ **Note**: This requires a canary build of the `js2wasm` plugin. Use the following command to install it:
+⚠️ **Note**: This requires v0.6.0 or later of the `js2wasm` plugin. Use the following commands to install it:
 
 ```bash
-$ spin plugins install -u https://github.com/fermyon/spin-js-sdk/releases/download/canary/js2wasm.json
+$ spin plugin update
+$ spin plugin install js2wasm
 ```
+
+(If you have previously installed the `canary` version of the plugin, you may need to uninstall first with `spin plugin uninstall js2wasm`.)
 
 ## Build and Running 
 
