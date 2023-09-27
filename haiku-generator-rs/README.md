@@ -5,18 +5,25 @@ This repository contains an pretrained gpt-j-6b-8bit model that generates a haik
 To download the pretrained model to generate haikus, please use the following commands:
 
 ```bash
+$ git clone https://github.com/fermyon/ai-examples.git
+$ cd haiku-generator-rs
 $ mkdir -p .spin/ai-models
 $ cd .spin/ai-models
-$ wget https://huggingface.co/robgonsalves/llama-2-13b-deep-haiku-GGML/blob/main/llama-2-13b-deep-haiku.ggml.fp16.bin
-$ mv pytorch_model.bin gpt-haiku # use (mv pytorch_model.bin llama2-chat) instead for now.
+# Before running the following code, please note that the model is 26GB and will take quite a long time to download (and use a good chunk of your bandwidth and any data download limits you might have).
+$ wget wget https://huggingface.co/tpmccallum/llama-2-13b-deep-haiku-GGML/resolve/main/llama-2-13b-deep-haiku.ggml.fp16.bin
+# Rename the model to align with the application's configuration
+$ mv llama-2-13b-deep-haiku.ggml.fp16.bin llama2-chat
 ```
 
 ## Build and Running 
 
 ```bash
-$ npm install 
-$ spin build
-$ spin up
+$ cd ../../../haiku-generator-rs
+$ spin build --up
 ```
 
-You can access the UI at http://localhost:3000. 
+## Testing
+
+```bash
+$ curl --json '{"sentence": "Please write a haiku about ChatGPT and Grammarly and AI for me now."}' http://localhost:3000/api/haiku-writing
+```
