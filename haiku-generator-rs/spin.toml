@@ -16,18 +16,3 @@ route = "/..."
 [component.build]
 command = "cargo build --target wasm32-wasi --release"
 watch = ["src/**/*.rs", "Cargo.toml"]
-
-[[component]]
-source = { url = "https://github.com/fermyon/spin-fileserver/releases/download/v0.0.3/spin_static_fs.wasm", digest = "sha256:38bf971900228222f7f6b2ccee5051f399adca58d71692cdfdea98997965fd0d" }
-id = "ui"
-files = [ { source = "assets", destination = "/" } ]
-[component.trigger]
-route = "/static/..."
-
-[[component]]
-source = { url = "https://github.com/radu-matei/spin-kv-explorer/releases/download/v0.9.0/spin-kv-explorer.wasm", digest = "sha256:07f5f0b8514c14ae5830af0f21674fd28befee33cd7ca58bc0a68103829f2f9c" }
-id = "kv-explorer"
-# add or remove stores you want to explore here
-key_value_stores = ["default"]
-[component.trigger]
-route = "/internal/kv-explorer/..."

@@ -7,7 +7,7 @@ To download the pretrained model to generate haikus, please use the following co
 ```bash
 $ mkdir -p .spin/ai-models
 $ cd .spin/ai-models
-$ wget https://huggingface.co/fabianmmueller/deep-haiku-gpt-j-6b-8bit/resolve/main/pytorch_model.bin
+$ wget https://huggingface.co/robgonsalves/llama-2-13b-deep-haiku-GGML/blob/main/llama-2-13b-deep-haiku.ggml.fp16.bin
 $ mv pytorch_model.bin gpt-haiku # use (mv pytorch_model.bin llama2-chat) instead for now.
 ```
 

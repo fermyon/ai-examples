@@ -1,50 +1,29 @@
-use std::str::FromStr;
-
 use anyhow::Result;
 use spin_sdk::{
     http::{Params, Request, Response, Router},
     http_component,
-    key_value::Store,
-    llm::{infer_with_options, InferencingModel::Llama2Chat},
+    llm::{infer, InferencingModel::Llama2Chat},
 };
 
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize)]
-pub struct SentimentAnalysisRequest {
+pub struct HaikuRequest {
     pub sentence: String,
 }
 
 #[derive(Serialize)]
-pub struct SentimentAnalysisResponse {
+pub struct HaikuResponse {
     pub sentiment: String,
 }
 
-const PROMPT: &str = r#"\
-<<SYS>>
-You are a haiku poetry-writing bot. I want you to write me some haiku poems based on the subject I provide. You must write haiku poetry where the first line contains five syllables, the second line must contains seven syllables, and the third (and last) line contains five syllables.
-<</SYS>>
-<INST>
-Follow the pattern of the following examples:
-
-User: Winter
-Bot: It is cold outside, I wish I had a heater, I wish it was warm.
-
-User: Spring
-Bot: The day is so nice, The birds are chirping outside, flowers are blooming.
-
-User: ChatGPT, Grammarly and AI
-Bot: Grammarly is neat, ChatGPT is awesome, haiku and AI
-</INST>
-
-User: {SENTENCE}
-"#;
-
+//const PROMPT: &str = r#"<s>[INST]<<SYS>>You are a haiku poetry assistant. You will create a Haiku about a given topic using graphemes.The hauki poetry you write for me, will always have 5 syllables in the first line, 7 syllables in the second line and 5 syllables in the 3rd (and final) line.<</SYS>>Please write me a haiku about {SENTENCE} now.[/INST]"#;
+const PROMPT: &str = r#"<s>[INST] <<SYS>> You will create a Haiku about a given topic using graphemes. <</SYS>> {SENTENCE} [/INST]"#;
 /// A Spin HTTP component that internally routes requests.
 #[http_component]
 fn handle_route(req: Request) -> Result<Response> {
     let mut router = Router::new();
-    router.post("/api/sentiment-analysis", perform_sentiment_analysis);
+    router.post("/api/haiku-writing", perform_haiku_writing);
     router.any("/api/*", not_found);
     router.handle(req)
 }
@@ -55,119 +34,29 @@ fn not_found(_: Request, _: Params) -> Result<Response> {
         .body(Some("Not found".into()))?)
 }
 
-fn perform_sentiment_analysis(req: Request, _params: Params) -> Result<Response> {
+fn perform_haiku_writing(req: Request, _params: Params) -> Result<Response> {
     let request = body_json_to_map(&req)?;
     // Do some basic clean up on the input
     let sentence = request.sentence.trim();
-    println!("Performing haiku writing analysis on: {}", sentence);
+    println!("Writing a haiku on the following topic: {}", sentence);
 
-    // Prepare the KV store
-    let kv = Store::open_default()?;
-
-    // If the sentiment of the sentence is already in the KV store, return it
-    if kv.exists(sentence).unwrap_or(false) {
-        println!("Found sentence in KV store returning cached sentiment");
-        let sentiment = kv.get(sentence)?;
-        let resp = SentimentAnalysisResponse {
-            sentiment: String::from_utf8(sentiment)?,
-        };
-        let resp_str = serde_json::to_string(&resp)?;
-
-        return send_ok_response(200, resp_str)
-    }
-    println!("Sentence not found in KV store");
-
-    // Otherwise, perform sentiment analysis
     println!("Running inference");
-    let inferencing_result = infer_with_options(
-        Llama2Chat,
-        &PROMPT.replace("{SENTENCE}", sentence),
-        spin_sdk::llm::InferencingParams {
-            max_tokens: 6,
-            ..Default::default()
-        },
-    )?;
-    println!("Inference result {:?}", inferencing_result);
-    let sentiment = inferencing_result
-        .text
-        .lines()
-        .next()
-        .unwrap_or_default()
-        .strip_prefix("Bot:")
-        .unwrap_or_default()
-        .parse::<Sentiment>();
-    println!("Got sentiment: {sentiment:?}");
-
-    if let Ok(sentiment) = sentiment {
-        println!("Caching sentiment in KV store");
-        let _ = kv.set(sentence, sentiment);
-    }
-    // Cache the result in the KV store
-    let resp = SentimentAnalysisResponse {
-        sentiment: sentiment
-            .as_ref()
-            .map(ToString::to_string)
-            .unwrap_or_default(),
-    };
-
-    let resp_str = serde_json::to_string(&resp)?;
-    send_ok_response(200, resp_str)
+    let inferencing_result = infer(Llama2Chat, &PROMPT.replace("{SENTENCE}", sentence))?;
+    println!("Inference result {:?}", inferencing_result.text);
+    send_ok_response(200, inferencing_result.text)
 }
 
 fn send_ok_response(code: u16, resp_str: String) -> Result<Response> {
     Ok(http::Response::builder()
-    .status(code)
-    .body(Some(resp_str.into()))?)
+        .status(code)
+        .body(Some(resp_str.into()))?)
 }
 
-fn body_json_to_map(req: &Request) -> Result<SentimentAnalysisRequest> {
+fn body_json_to_map(req: &Request) -> Result<HaikuRequest> {
     let body = match req.body().as_ref() {
         Some(bytes) => bytes,
         None => anyhow::bail!("Request body was unexpectedly empty"),
     };
 
     Ok(serde_json::from_slice(&body)?)
-}
-
-#[derive(Copy, Clone, Debug)]
-enum Sentiment {
-    Positive,
-    Negative,
-    Neutral,
-}
-
-impl Sentiment {
-    fn as_str(&self) -> &str {
-        match self {
-            Self::Positive => "positive",
-            Self::Negative => "negative",
-            Self::Neutral => "neutral",
-        }
-    }
-}
-
-impl std::fmt::Display for Sentiment {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str(self.as_str())
-    }
-}
-
-impl AsRef<[u8]> for Sentiment {
-    fn as_ref(&self) -> &[u8] {
-        self.as_str().as_bytes()
-    }
-}
-
-impl FromStr for Sentiment {
-    type Err = String;
-
-    fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        let sentiment = match s.trim() {
-            "positive" => Self::Positive,
-            "negative" => Self::Negative,
-            "neutral" => Self::Neutral,
-            _ => return Err(s.into()),
-        };
-        Ok(sentiment)
-    }
 }
