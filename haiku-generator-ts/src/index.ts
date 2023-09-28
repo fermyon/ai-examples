@@ -30,7 +30,6 @@ async function performHaikuGenerator(request: HttpRequest) {
   let data = request.json() as HaikuRequest;
   let sentence = data.sentence.trim();
   console.log("Generating haiku on: " + sentence);
-
   console.log("Running inference"); 
   let inferenceResult = Llm.infer(
     InferencingModels.Llama2Chat,
@@ -39,14 +38,11 @@ async function performHaikuGenerator(request: HttpRequest) {
   console.log(
     `Inference result (${inferenceResult.usage.generatedTokenCount} tokens): ${inferenceResult.text}`
   );
-  let sentiment = inferenceResult.text.split(/\s+/)[1]?.trim();
+
 
   return {
     status: 200,
-    body: JSON.stringify({
-      sentiment,
-    } as HaikuResponse),
-  };
+    body: inferenceResult.text };
 }
 
 let router = Router();
