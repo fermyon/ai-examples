@@ -41,7 +41,7 @@ function newCard() {
 
   console.log("Running inference on sentence: " + sentence);
   runningInference = true;
-  fetch("/api/sentiment-analysis", {
+  fetch("/api/haiku-writing", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -50,7 +50,6 @@ function newCard() {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       updateCard(cardIndex, sentence, data.sentiment);
     })
     .catch((error) => {
@@ -60,15 +59,8 @@ function newCard() {
 
 function updateCard(cardIndex, sentence, sentiment) {
   badge = "";
-  if (sentiment === "positive") {
-    badge = `<span class="badge badge-success">Positive</span>`;
-  } else if (sentiment === "negative") {
-    badge = `<span class="badge badge-error">Negative</span>`;
-  } else if (sentiment === "neutral") {
-    badge = `<span class="badge badge-ghost">Neutral</span>`;
-  } else {
-    badge = `<span class="badge badge-ghost">Unsure</span>`;
-  }
+  badge = `<span class="badge badge-success">sentiment</span>`;
+  
   var cardElement = document.getElementById("card-" + cardIndex);
   cardElement.innerHTML = `
     <div class="card bg-base-100 shadow-xl w-full">

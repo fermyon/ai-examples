@@ -2,22 +2,17 @@
 
 This repository contains an pretrained gpt-j-6b-8bit model that generates a haiku in the 5-7-5 format and a simple UI to interact with it.
 
-⚠️ **Note**: This requires v0.6.0 or later of the `js2wasm` plugin. Use the following commands to install it:
-
-```bash
-$ spin plugin update
-$ spin plugin install js2wasm
-```
-
-(If you have previously installed the `canary` version of the plugin, you may need to uninstall first with `spin plugin uninstall js2wasm`.)
-
 To download the pretrained model to generate haikus, please use the following commands:
 
 ```bash
+$ git clone https://github.com/fermyon/ai-examples.git
+$ cd haiku-generator-rs
 $ mkdir -p .spin/ai-models
 $ cd .spin/ai-models
-$ wget https://huggingface.co/fabianmmueller/deep-haiku-gpt-j-6b-8bit/resolve/main/pytorch_model.bin
-$ mv pytorch_model.bin gpt-haiku
+# Before running the following code, please note that the model is 26GB and will take quite a long time to download (and use a good chunk of your bandwidth and any data download limits you might have).
+$ wget https://huggingface.co/tpmccallum/llama-2-13b-deep-haiku-GGML/resolve/main/llama-2-13b-deep-haiku.ggml.fp16.bin
+# Rename the model to align with the application's configuration
+$ mv llama-2-13b-deep-haiku.ggml.fp16.bin llama2-chat
 ```
 
 ## Build and Running 
