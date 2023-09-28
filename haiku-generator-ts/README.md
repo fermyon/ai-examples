@@ -1,6 +1,6 @@
 # Haiku Generator
 
-This repository contains an pretrained gpt-j-6b-8bit model that generates a haiku in the 5-7-5 format and a simple UI to interact with it.
+This repository contains an pretrained Llama2 model that generates a haiku in the 5-7-5 format and a simple UI to interact with it.
 
 To download the pretrained model to generate haikus, please use the following commands:
 
