@@ -2,6 +2,8 @@
 
 This repository contains a pre-trained [llama-2](https://huggingface.co/tpmccallum/llama-2-13b-deep-haiku-GGML) model that generates a haiku in the 5-7-5 format.
 
+> **NOTE:** This tutorial uses [Meta AI](https://ai.meta.com/)'s Llama 2, Llama Chat and Code Llama models you will need to visit [Meta's Llama webpage](https://ai.meta.com/resources/models-and-libraries/llama-downloads/) and agree to Meta's License, Acceptable Use Policy, and to Meta’s privacy policy before fetching and using Llama models.
+
 To download the pre-trained model and run the pre-written Rust app that generates haikus, please use the following commands:
 
 ## Clone the Application's Repository and Download the AI Model
