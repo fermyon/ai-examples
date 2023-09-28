@@ -1,8 +1,10 @@
 # Haiku Generator
 
-This repository contains an pretrained gpt-j-6b-8bit model that generates a haiku in the 5-7-5 format and a simple UI to interact with it.
+This repository contains a pre-trained [llama-2](https://huggingface.co/tpmccallum/llama-2-13b-deep-haiku-GGML) model that generates a haiku in the 5-7-5 format.
 
-To download the pretrained model to generate haikus, please use the following commands:
+To download the pre-trained model and run the pre-written Rust app that generates haikus, please use the following commands:
+
+## Clone the Application's Repository and Download the AI Model
 
 ```bash
 $ git clone https://github.com/fermyon/ai-examples.git
@@ -15,14 +17,14 @@ $ wget wget https://huggingface.co/tpmccallum/llama-2-13b-deep-haiku-GGML/resolv
 $ mv llama-2-13b-deep-haiku.ggml.fp16.bin llama2-chat
 ```
 
-## Build and Running 
+## Build and Run the Application
 
 ```bash
 $ cd ../../../haiku-generator-rs
 $ spin build --up
 ```
 
-## Testing
+## Test the Application in the CLI
 
 ```bash
 $ curl --json '{"sentence": "Please write a haiku about ChatGPT and Grammarly and AI for me now."}' http://localhost:3000/api/haiku-writing
