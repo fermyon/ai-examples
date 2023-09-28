@@ -2,6 +2,8 @@
 
 This repository contains a pre-trained Llama2 model that generates a haiku in the 5-7-5 format and a simple UI to interact with it.
 
+> **NOTE:** This tutorial uses [Meta AI](https://ai.meta.com/)'s Llama 2, Llama Chat and Code Llama models you will need to visit [Meta's Llama webpage](https://ai.meta.com/resources/models-and-libraries/llama-downloads/) and agree to Meta's License, Acceptable Use Policy, and to Meta’s privacy policy before fetching and using Llama models.
+
 To download the pre-trained model to generate haikus, please use the following commands:
 
 ```bash
