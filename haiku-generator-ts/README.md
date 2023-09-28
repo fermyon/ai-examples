@@ -13,6 +13,7 @@ $ cd .spin/ai-models
 $ wget https://huggingface.co/tpmccallum/llama-2-13b-deep-haiku-GGML/resolve/main/llama-2-13b-deep-haiku.ggml.fp16.bin
 # Rename the model to align with the application's configuration
 $ mv llama-2-13b-deep-haiku.ggml.fp16.bin llama2-chat
+$ cd ../.../
 ```
 
 ## Build and Running 
