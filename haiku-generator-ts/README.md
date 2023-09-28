@@ -6,7 +6,7 @@ To download the pretrained model to generate haikus, please use the following co
 
 ```bash
 $ git clone https://github.com/fermyon/ai-examples.git
-$ cd haiku-generator-rs
+$ cd haiku-generator-ts
 $ mkdir -p .spin/ai-models
 $ cd .spin/ai-models
 # Before running the following code, please note that the model is 26GB and will take quite a long time to download (and use a good chunk of your bandwidth and any data download limits you might have).
