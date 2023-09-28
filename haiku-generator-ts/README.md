@@ -1,8 +1,8 @@
 # Haiku Generator
 
-This repository contains an pretrained Llama2 model that generates a haiku in the 5-7-5 format and a simple UI to interact with it.
+This repository contains a pre-trained Llama2 model that generates a haiku in the 5-7-5 format and a simple UI to interact with it.
 
-To download the pretrained model to generate haikus, please use the following commands:
+To download the pre-trained model to generate haikus, please use the following commands:
 
 ```bash
 $ git clone https://github.com/fermyon/ai-examples.git
@@ -16,6 +16,13 @@ $ mv llama-2-13b-deep-haiku.ggml.fp16.bin llama2-chat
 $ cd ../.../
 ```
 
+⚠️ **Note**: This requires v0.6.0 or later of the `js2wasm` plugin. Use the following commands to install it:
+
+```bash
+$ spin plugin update
+$ spin plugin install js2wasm
+```
+
 ## Build and Running 
 
 ```bash
@@ -24,4 +31,8 @@ $ spin build
 $ spin up
 ```
 
-You can access the UI at http://localhost:3000. 
+You can access the UI at http://localhost:3000 and use the web interface or you can use the following curl command:
+
+```bash
+curl -X POST http://localhost:3000/api/haiku-writing -H 'Content-Type: application/json' -d '{"sentence":"ChatGPT"}'
+```
