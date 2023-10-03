@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html data-theme="cupcake">
+  <head>
+    <title>Haiku Generator</title>
+    <meta name="description" content="Perform haiku generator" />
+
+    <!-- Tailwind and Daisy UI -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@3.2.1/dist/full.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+
+    <!-- Import script to make page dynamic -->
+    <script src="dynamic.js"></script>
+  </head>
+
+  <body class="bg-base-200">
+    <div id="alert" class="fixed top-20 inset-x-0 w-1/2 mx-auto"></div>
+    <div class="flex flex-col min-h-screen">
+      <div
+        class="sticky top-0 z-30 flex h-16 w-full justify-center bg-opacity-90 backdrop-blur transition-all duration-100 bg-base-100 text-base-content shadow-md"
+      >
+        <nav class="navbar w-full">
+          <div class="flex-1">
+            <a href="/" class="btn btn-ghost text-4xl font-bold"
+              >Haiku Generator</a
+            >
+          </div>
+          <div class="flex-none">
+            <a href="" class="btn btn-warning">Restart</a>
+          </div>
+        </nav>
+      </div>
+      <main class="mx-auto my-10 prose">
+        <p>
+          This Haiku generator is a demonstration of how you can use Fermyon
+          Serverless AI to easily make an AI-powered API. When you type in a
+          topic it is sent to a Spin app running in the Fermyon Cloud and a haiku 
+          is generated with a pre-trained model. 
+        </p>
+        <p>
+          Note that LLM's are not perfect and the haikus performed
+          by this application is not guaranteed to perfectly follow the format of 5-7-5. 
+        </p>
+        <p>
+          To get started type a topic below and press
+          <kbd class="kbd kbd-sm">enter</kbd>.
+        </p>
+
+        <div class="flex flex-col gap-8 w-full">
+          <input
+            id="sentence-input"
+            type="text"
+            placeholder="Type the topic you want to generate a haiku with here."
+            class="input w-full"
+          />
+          <div>
+            <button class="btn btn-primary" onclick="newCard()">Generate</button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

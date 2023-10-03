@@ -1,0 +1,18 @@
+spin_manifest_version = "1"
+authors = ["tpmccallum <tim.mccallum@fermyon.com>"]
+description = "An application that can write haiku poetry via Fermyon Serverless AI"
+name = "haiku-generator-rs"
+trigger = { type = "http", base = "/" }
+version = "0.1.0"
+
+[[component]]
+id = "haiku-generator-rs"
+source = "target/wasm32-wasi/release/haiku_generator_rs.wasm"
+allowed_http_hosts = []
+ai_models = ["llama2-chat"]
+key_value_stores = ["default"]
+[component.trigger]
+route = "/..."
+[component.build]
+command = "cargo build --target wasm32-wasi --release"
+watch = ["src/**/*.rs", "Cargo.toml"]

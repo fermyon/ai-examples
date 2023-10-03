@@ -1,0 +1,24 @@
+spin_manifest_version = "1"
+authors = ["tpmccallum <tim.mccallum@fermyon.com>"]
+description = "An application that can write haiku poetry via Fermyon Serverless AI"
+name = "haiku-generator-ts"
+trigger = { type = "http", base = "/" }
+version = "0.1.0"
+
+[[component]]
+id = "haiku-generator-ts"
+source = "target/haiku-generator-ts.wasm"
+exclude_files = ["**/node_modules"]
+ai_models = ["llama2-chat"]
+[component.trigger]
+route = "/api/..."
+[component.build]
+command = "npm run build"
+watch = ["src/**/*", "package.json", "package-lock.json"]
+
+[[component]]
+source = { url = "https://github.com/fermyon/spin-fileserver/releases/download/v0.0.1/spin_static_fs.wasm", digest = "sha256:650376c33a0756b1a52cad7ca670f1126391b79050df0321407da9c741d32375" }
+id = "ui"
+files = [{ source = "../haiku-generator-assets", destination = "/" }]
+[component.trigger]
+route = "/..."
