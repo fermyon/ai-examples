@@ -58,7 +58,7 @@ The result is returned to you as a JSON String
 
 ```json
 {
-    "sentence": "Bot: positive"
+    "sentence": "positive"
 }
 ```
 
