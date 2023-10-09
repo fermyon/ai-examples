@@ -32,7 +32,7 @@ $ git clone https://github.com/fermyon/ai-examples.git
 # Build the Application
 
 ```bash
-$ cd cd ai-examples/sentiment-analysis-py
+$ cd ai-examples/sentiment-analysis-py
 $ spin build
 ```
 
