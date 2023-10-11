@@ -29,7 +29,7 @@ struct Body {
 fn main() -> anyhow::Result<()> {
     let cli = Cli::parse();
     let response = reqwest::Client::new()
-        .post("https://code-ehbxedul.fermyon.app")
+        .post("http://localhost:3000")
         .body(serde_json::to_vec(&Body {
             language: cli.language,
             prompt: cli.prompt,
