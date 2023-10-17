@@ -4,7 +4,7 @@ This is a example application showcasing a recommendation system for blogs.
 
 Please check the repo's [README](../README.md#prerequisites) for prerequisites for running this example.
 
-This samples uses the Vector extension to sqlite, which is available with [Turso](https://turso.tech/).
+This sample uses the Vector extension to sqlite, which is available with [Turso](https://turso.tech/).
 
 ### Steps to use
 
