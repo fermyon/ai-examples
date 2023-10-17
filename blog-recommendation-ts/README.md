@@ -1,19 +1,14 @@
 ## Blog recommendation 
 
-This is a example application showcasing a recommendation system for blogs. Please make sure you've followed prerequiste instructions from the [parent README](../README.md) before following steps below
+This is a example application showcasing a recommendation system for blogs.
 
-⚠️ **Note**: This requires v0.6.0 or later of the `js2wasm` plugin. Use the following commands to install it:
+Please check the repo's [README](../README.md#prerequisites) for prerequisites for running this example.
 
-```bash
-$ spin plugin update
-$ spin plugin install js2wasm
-```
-
-(If you have previously installed the `canary` version of the plugin, you may need to uninstall first with `spin plugin uninstall js2wasm`.)
+This sample uses the Vector extension to sqlite, which is available with [Turso](https://turso.tech/).
 
 ### Steps to use
 
-- Create a turso db using personal account and get configs
+- Create a [Turso database](https://turso.tech/) using personal account and get configs
 
 ```bash
 turso db create --enable-extensions
@@ -37,6 +32,8 @@ $ npm install
 $ spin  build -u --runtime-config-file runtime-config.toml --sqlite @migrations.sql
 ```
 
+> Note: If you are using the Cloud GPU component, remember to add the `[llm_compute]` section to the `runtime-config.toml` file.
+
 - Create embeddings for all the posts
 
 ```bash
@@ -47,4 +44,10 @@ $ spin  build -u --runtime-config-file runtime-config.toml --sqlite @migrations.
 
 ```bash
 curl -X POST -d '{"blogPath": "scale-to-zero-problem"}' http://localhost:3000/getRecommendations
+```
+
+## Deploy the application to Fermyon Cloud
+
+```bash
+$ spin deploy
 ```

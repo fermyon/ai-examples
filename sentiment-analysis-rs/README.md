@@ -15,7 +15,7 @@ $ spin build --up
 ## Test the Application
 
 ```bash
-$ curl -X POST --data '{"sentence":"Everything is awesome!"}' https://sentiment-analysis-abc-xyz.fermyon.app/
+$ curl --json '{"sentence": "Worst day ever"}' http://localhost:3000/api/sentiment-analysis
 ```
 
 You can access the UI at http://localhost:3000. The KV-Explorer can be found at http://localhost:3000/internal/kv-explorer.
@@ -26,3 +26,5 @@ You can access the UI at http://localhost:3000. The KV-Explorer can be found at 
 $ cd api
 $ spin deploy
 ```
+
+Make sure to change the url-reference in the `./client/src/main.rs`` file
