@@ -10,7 +10,7 @@ The following prerequisites are needed to build and run these examples:
     - js2wasm 0.6.1 `spin plugins install js2wasm`.
     - py2wasm 0.3.2 `spin plugins install py2wasm`.
 - Optional, but highly recommended, is to use the [Spin Cloud GPU component](https://github.com/fermyon/spin-cloud-gpu). This offloads inferencing to Fermyon Cloud GPUs, and thus requires a free account to [Fermyon Cloud Serverless AI](https://www.fermyon.com/serverless-ai).
-- If you do not want to use the Cloud GPU component, the instructions on how to download the required models for inferencing and embedding, can be found [here](https://developer.fermyon.com/spin/ai-sentiment-analysis-api-tutorial#application-structure).
+- If you do not want to use the Cloud GPU component, the instructions on how to download the required models for inferencing and embedding can be found [here](https://developer.fermyon.com/spin/ai-sentiment-analysis-api-tutorial#application-structure).
 
 > Note that Fermyon Cloud support is currently in private beta. To apply for access to the private beta, please fill out [this survey](https://fibsu0jcu2g.typeform.com/serverless-ai). 
 
