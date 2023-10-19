@@ -26,9 +26,9 @@ Here is a table of the following examples:
 | [haiku-generator-ts](./haiku-generator-ts/)  | TypeScript  |  :white_check_mark:  |   |    |
 | [newsfeeder-ts](./newsfeeder-ts/)  | Typescript  |   :white_check_mark:  |   |    |
 | [openapi-rs](./openapi-rs/)  | Rust  |   :white_check_mark:  |   |    |
-| [sentiment-analysis-py](./sentiment-analysis-py/)  |  Rust | :white_check_mark:  |   |    |
-| [sentiment-analysis-rs](./sentiment-analysis-rs/)  |  Typescript | :white_check_mark:  |   |    |
-| [sentiment-analysis-ts](./sentiment-analysis-ts/)  |  Rust | :white_check_mark:  |   |    |
+| [sentiment-analysis-py](./sentiment-analysis-py/)  |  Python | :white_check_mark:  |   |    |
+| [sentiment-analysis-rs](./sentiment-analysis-rs/)  |  Rust | :white_check_mark:  |   |    |
+| [sentiment-analysis-ts](./sentiment-analysis-ts/)  |  Typescript | :white_check_mark:  |   |    |
 | [silly-walk-ts](./silly-walk-ts/)  | Typescript | :white_check_mark:  |   |    |
 
 To get started building your own applications, follow [these instructions](https://developer.fermyon.com/spin/serverless-ai-tutorial) to make sure you have installed the correct version of Spin and the necessary SDKs. If you'd like to learn more about the API, visit the [API guide here](https://developer.fermyon.com/spin/serverless-ai-api-guide).
