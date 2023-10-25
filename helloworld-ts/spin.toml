@@ -1,0 +1,16 @@
+spin_manifest_version = "1"
+authors = ["Sohan <1119120+sohanmaheshwar@users.noreply.github.com>"]
+description = "A Hello World Serverless AI application, written in Typescript"
+name = "helloworld-ts"
+trigger = { type = "http", base = "/" }
+version = "0.1.0"
+
+[[component]]
+id = "helloworld-ts"
+source = "target/helloworld-ts.wasm"
+exclude_files = ["**/node_modules"]
+ai_models = ["llama2-chat"]
+[component.trigger]
+route = "/..."
+[component.build]
+command = "npm run build"

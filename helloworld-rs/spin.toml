@@ -1,0 +1,17 @@
+spin_manifest_version = "1"
+authors = ["Sohan <1119120+sohanmaheshwar@users.noreply.github.com>"]
+description = "A Hello World Serverless AI app, written in Rust"
+name = "helloworld-rs"
+trigger = { type = "http", base = "/" }
+version = "0.1.0"
+
+[[component]]
+id = "helloworld-rs"
+source = "target/wasm32-wasi/release/helloworld_rs.wasm"
+allowed_http_hosts = []
+ai_models = ["llama2-chat"]
+[component.trigger]
+route = "/..."
+[component.build]
+command = "cargo build --target wasm32-wasi --release"
+watch = ["src/**/*.rs", "Cargo.toml"]
