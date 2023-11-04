@@ -1,0 +1,53 @@
+name: Release Artifacts for AI examples
+on:
+  workflow_dispatch:
+    inputs:
+      app:
+        type: choice
+        description: Which app to build and push
+        options: 
+        - newsfeeder-ts
+      tag:
+        type: string
+        description: 'new tag for this push'
+        required: true
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  echo-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo Inputs
+        run: |
+          echo app: ${{ github.event.inputs.app }}
+          echo tag: ${{ github.event.inputs.tag }}
+
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 19
+
+      - name: setup spin
+        uses: fermyon/actions/spin/setup@v1
+        with:
+          version: v2.0.0
+          plugins: js2wasm
+          github_token: ${{ github.token }}
+
+      - name: npm install
+        run: npm install --prefix ${{ github.event.inputs.app }}
+
+      - name: build and push
+        uses: fermyon/actions/spin/push@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          registry_username: ${{ github.actor }}
+          registry_password: ${{ secrets.GITHUB_TOKEN }}
+          registry_reference: "${{ env.REGISTRY }}/fermyon/${{ github.event.inputs.app }}:${{ github.event.inputs.tag }}"
+          manifest_file: ${{ github.event.inputs.app }}/spin.toml
