@@ -5,7 +5,7 @@ info:
   description: |
     This API provides access to the Spin LLM model.
 servers:
-  - url: http://127.0.0.1:3000/api
+  - url: /api
 paths:
   /infer:
     post:
