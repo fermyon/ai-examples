@@ -1,0 +1,8 @@
+[llm_compute]
+type = "remote_http"
+url = "https://fermyon-cloud-gpu-tqbjde2w.fermyon.app/"
+auth_token = "1339407c-13b8-40e6-86ef-330416d63327"
+
+[key_value_store.promptstore]
+type = "spin" 
+path = ".spin/promptstore.db"

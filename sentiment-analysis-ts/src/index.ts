@@ -19,25 +19,9 @@ interface SentimentAnalysisResponse {
 
 const decoder = new TextDecoder();
 
-const PROMPT = `\
-<<SYS>>
-You are a bot that generates sentiment analysis responses. Respond with a single positive, negative, or neutral.
-<</SYS>>
-[INST]
-Follow the pattern of the following examples:
-
-User: Hi, my name is Bob
-Bot: neutral
-
-User: I am so happy today
-Bot: positive
-
-User: I am so sad today
-Bot: negative
-[/INST]
-
-User: {SENTENCE}
-`;
+/*
+const PROMPT = `
+`; */
 
 async function performSentimentAnalysis(request: HttpRequest) {
   // Parse sentence out of request
@@ -45,8 +29,38 @@ async function performSentimentAnalysis(request: HttpRequest) {
   let sentence = data.sentence.trim();
   console.log("Performing sentiment analysis on: " + sentence);
 
+  // Randomly decide to use Store A or Store B
+  let seed = Math.random()
+
+  // Open the correct store based on random number generator 
+  let kv = seed <= 0.5 ? Kv.open("promptstore1") : Kv.open("promptstore2");
+
   // Prepare the KV store
-  let kv = Kv.openDefault();
+  // let kv = Kv.open("promptstore");
+
+  let defaultPrompt = `
+    <<SYS>>
+    You are a bot that generates sentiment analysis responses. Respond with a single positive, negative, or neutral.
+    <</SYS>>
+    [INST]
+    Follow the pattern of the following examples:
+    
+    User: Hi, my name is Bob
+    neutral
+    
+    User: I am so happy today
+    positive
+    
+    User: I am so sad today
+    negative
+    [/INST]
+    
+    User: {SENTENCE}`;
+
+
+  // Grab prompt from KV Store if it exits, otherwise set to this default
+  let prompt = kv.exists("prompt") ? decoder.decode(kv.get("prompt") || new Uint8Array) : defaultPrompt;
+  console.log("Prompt is:" + prompt);
 
   // If the sentiment of the sentence is already in the KV store, return it
   let cachedSentiment = kv.get(sentence);
@@ -66,13 +80,14 @@ async function performSentimentAnalysis(request: HttpRequest) {
   let options: InferencingOptions = { maxTokens: 6 };
   let inferenceResult = Llm.infer(
     InferencingModels.Llama2Chat,
-    PROMPT.replace("{SENTENCE}", sentence),
+    prompt.replace("{SENTENCE}", sentence),
     options
   );
   console.log(
     `Inference result (${inferenceResult.usage.generatedTokenCount} tokens): ${inferenceResult.text}`
   );
   let sentiment = inferenceResult.text.split(/\s+/)[1]?.trim();
+  console.log("Sentiment: " + sentiment)
 
   // Clean up result from inference
   if (
