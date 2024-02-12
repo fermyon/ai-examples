@@ -30,13 +30,13 @@ async function performSentimentAnalysis(request: HttpRequest) {
   console.log("Performing sentiment analysis on: " + sentence);
 
   // Randomly decide to use Store A or Store B
-  let seed = Math.random()
+  // let seed = Math.random()
 
   // Open the correct store based on random number generator 
-  let kv = seed <= 0.5 ? Kv.open("promptstore1") : Kv.open("promptstore2");
+  // let kv = seed <= 0.5 ? Kv.open("promptstore1") : Kv.open("promptstore2");
 
   // Prepare the KV store
-  // let kv = Kv.open("promptstore");
+  let kv = Kv.open("promptstore");
 
   let defaultPrompt = `
     <<SYS>>
