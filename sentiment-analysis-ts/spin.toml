@@ -1,34 +1,48 @@
-spin_version = "1"
+spin_manifest_version = 2
+
+[application]
+name = "sentiment-analysis"
+version = "0.1.0"
 authors = ["Caleb Schoepp <caleb.schoepp@fermyon.com>"]
 description = "A sentiment analysis API that demonstrates using LLM inference and KV stores together"
-name = "sentiment-analysis"
-trigger = { type = "http", base = "/" }
-version = "0.1.0"
 
-[[component]]
-id = "sentiment-analysis"
+[[trigger.http]]
+route = "/api/..."
+component = "sentiment-analysis"
+
+[component.sentiment-analysis]
 source = "target/spin-http-js.wasm"
+allowed_outbound_hosts = []
 exclude_files = ["**/node_modules"]
 key_value_stores = ["default"]
 ai_models = ["llama2-chat"]
-[component.trigger]
-route = "/api/..."
-[component.build]
+
+[component.sentiment-analysis.build]
 command = "npm run build"
 watch = ["src/**/*", "package.json", "package-lock.json"]
 
-[[component]]
-source = { url = "https://github.com/radu-matei/spin-kv-explorer/releases/download/v0.8.0/spin-kv-explorer.wasm", digest = "sha256:e1667e756004000913d869b72db600fb2675f4358c6f0cc2581dfa869e56073c" }
-id = "kv-explorer"
-# add or remove stores you want to explore here
-key_value_stores = ["default"]
-[component.trigger]
+[[trigger.http]]
+route = "/..."
+component = "ui"
+
+[component.ui]
+source = { url = "https://github.com/fermyon/spin-fileserver/releases/download/v0.0.1/spin_static_fs.wasm", digest = "sha256:650376c33a0756b1a52cad7ca670f1126391b79050df0321407da9c741d32375" }
+allowed_outbound_hosts = []
+files = [{ source = "../sentiment-analysis-assets", destination = "/" }]
+
+[variables]
+kv_explorer_user = { required = true }
+kv_explorer_password = { required = true }
+
+[[trigger.http]]
+component = "kv-explorer"
 route = "/internal/kv-explorer/..."
 
-[[component]]
-source = { url = "https://github.com/fermyon/spin-fileserver/releases/download/v0.0.1/spin_static_fs.wasm", digest = "sha256:650376c33a0756b1a52cad7ca670f1126391b79050df0321407da9c741d32375" }
-id = "ui"
-files = [{ source = "../sentiment-analysis-assets", destination = "/" }]
-[component.trigger]
-route = "/..."
+[component.kv-explorer]
+source = { url = "https://github.com/fermyon/spin-kv-explorer/releases/download/v0.10.0/spin-kv-explorer.wasm", digest = "sha256:65bc286f8315746d1beecd2430e178f539fa487ebf6520099daae09a35dbce1d" }
+allowed_outbound_hosts = ["redis://*:*", "mysql://*:*", "postgres://*:*"]
+# add or remove stores you want to explore here
+key_value_stores = ["default"]
 
+[component.kv-explorer.variables]
+kv_credentials = "{{ kv_explorer_user }}:{{ kv_explorer_password }}"
