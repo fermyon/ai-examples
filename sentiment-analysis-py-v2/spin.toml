@@ -1,0 +1,16 @@
+spin_manifest_version = "1"
+authors = ["tpmccallum <tim.mccallum@fermyon.com>"]
+description = "A sentiment analysis application written in Python, that uses Fermyon Serverless AI"
+name = "sentiment-analysis"
+trigger = { type = "http", base = "/" }
+version = "0.1.0"
+
+[[component]]
+id = "sentiment-analysis"
+source = "app.wasm"
+ai_models = ["llama2-chat"]
+[component.trigger]
+route = "/..."
+[component.build]
+command = "componentize-py -w spin-http componentize -p . -p $(python3 -c 'import site; print(site.getsitepackages()[0])') app -o app.wasm"
+watch = ["*.py", "requirements.txt"]
