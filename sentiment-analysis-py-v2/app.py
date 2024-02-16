@@ -1,5 +1,5 @@
-from spin_sdk.http import IncomingHandler, Request, Response
-from spin_sdk import llm
+from spin_sdk import http, llm
+from spin_sdk.http import Request, Response
 import json
 import re
 
@@ -21,7 +21,7 @@ Bot: negative
 
 User: """
 
-class IncomingHandler(IncomingHandler):
+class IncomingHandler(http.IncomingHandler):
     def handle_request(self, request: Request) -> Response:
         request_body=json.loads(request.body)
         sentence=request_body["sentence"].strip()
