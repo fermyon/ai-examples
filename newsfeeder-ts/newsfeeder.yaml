@@ -1,0 +1,8 @@
+apiVersion: core.spinoperator.dev/v1alpha1
+kind: SpinApp
+metadata:
+  name: newsfeeder-ts
+spec:
+  image: "ghcr.io/fermyon/newsfeeder-ts:v0.0.1"
+  executor: containerd-shim-spin
+  replicas: 2
