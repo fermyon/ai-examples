@@ -18,7 +18,7 @@ export const handleRequest: HandleRequest = async function (request: HttpRequest
     }
   }
   console.log(feed.title)
-  var prompt = "Here are today's TechCrunch news items. In the style of a news brief, summarize in one paragraph the the items that have to do with cloud.\n\n"
+  var prompt = "Here are today's TechCrunch news items. In the style of a news brief, summarize in one paragraph the items that have to do with cloud.\n\n"
   const maxItems = feed.items.length > MAX_ITEMS ? MAX_ITEMS : feed.items.length
   for (let index = 0; index < maxItems; index++) {
     const element = feed.items[index]
