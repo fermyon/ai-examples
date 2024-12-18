@@ -12,5 +12,5 @@ ai_models = ["llama2-chat"]
 [component.trigger]
 route = "/..."
 [component.build]
-command = "spin py2wasm app -o app.wasm"
-watch = ["app.py", "Pipfile"]
+command = "componentize-py -w spin-http componentize -p . -p $(python3 -c 'import site; print(site.getsitepackages()[0])') app -o app.wasm"
+watch = ["*.py", "requirements.txt"]

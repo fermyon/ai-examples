@@ -1,5 +1,5 @@
-from spin_http import Response
-from spin_llm import llm_infer
+from spin_sdk import http, llm
+from spin_sdk.http import Request, Response
 import json
 import re
 
@@ -21,11 +21,12 @@ Bot: negative
 
 User: """
 
-def handle_request(request):
-    request_body=json.loads(request.body)
-    sentence=request_body["sentence"].strip()
-    result=llm_infer("llama2-chat", PROMPT+sentence)
-    response_body=json.dumps({"sentence": re.sub("\\nBot\: ", "", result.text)})
-    return Response(200,
-                    {"content-type": "application/json"},
-                    bytes(response_body, "utf-8"))
+class IncomingHandler(http.IncomingHandler):
+    def handle_request(self, request: Request) -> Response:
+        request_body=json.loads(request.body)
+        sentence=request_body["sentence"].strip()
+        result = llm.infer("llama2-chat", PROMPT+sentence)
+        response_body=json.dumps({"sentiment": re.sub("\\nBot\: ", "", result.text)})
+        return Response(200,
+                        {"content-type": "application/json"},
+                        bytes(response_body, "utf-8"))
