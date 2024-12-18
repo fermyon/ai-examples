@@ -1,4 +1,6 @@
-# Sentiment Analysis
+# Sentiment Analysis 
+
+This example is based on the newer Spin Python SDK based on [`componentize-py`](https://github.com/bytecodealliance/componentize-py).
 
 This repository contains an API that performs sentiment analysis and a simple UI to interact with it.
 
@@ -7,6 +9,9 @@ Please check the repo's [README](../README.md#prerequisites) for prerequisites f
 ## Build and Running 
 
 ```bash
+$ python3 -m venv venv
+$ source venv/bin/activate
+$ pip3 install -r requirements.txt
 $ spin build --up
 ```
 
@@ -23,6 +28,5 @@ You can access the UI at http://localhost:3000. The KV-Explorer can be found at 
 ## Deploy the application to Fermyon Cloud
 
 ```bash
-$ cd api
 $ spin deploy
 ```
