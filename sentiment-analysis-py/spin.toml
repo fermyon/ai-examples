@@ -1,16 +1,44 @@
-spin_manifest_version = "1"
-authors = ["tpmccallum <tim.mccallum@fermyon.com>"]
-description = "A sentiment analysis application written in Python, that uses Fermyon Serverless AI"
+spin_manifest_version = 2
+
+[application]
+authors = ["Mikkel Mørk Hegnhøj <mikkel@fermyon.com>"]
+description = "A sentiment analysis API that demonstrates using LLM inferencing and KV stores together"
 name = "sentiment-analysis"
-trigger = { type = "http", base = "/" }
 version = "0.1.0"
 
-[[component]]
-id = "sentiment-analysis"
+[[trigger.http]]
+route = "/api/..."
+component = "sentiment-analysis"
+
+[component.sentiment-analysis]
 source = "app.wasm"
 ai_models = ["llama2-chat"]
-[component.trigger]
-route = "/..."
-[component.build]
-command = "componentize-py -w spin-http componentize -p . -p $(python3 -c 'import site; print(site.getsitepackages()[0])') app -o app.wasm"
+key_value_stores = ["default"]
+[component.sentiment-analysis.build]
+command = "componentize-py -w spin-http componentize app -o app.wasm"
 watch = ["*.py", "requirements.txt"]
+
+[[trigger.http]]
+component = "kv-explorer"
+route = "/internal/kv-explorer/..."
+
+[component.kv-explorer]
+source = { url = "https://github.com/fermyon/spin-kv-explorer/releases/download/v0.10.0/spin-kv-explorer.wasm", digest = "sha256:65bc286f8315746d1beecd2430e178f539fa487ebf6520099daae09a35dbce1d" }
+allowed_outbound_hosts = ["redis://*:*", "mysql://*:*", "postgres://*:*"]
+# add or remove stores you want to explore here
+key_value_stores = ["default"]
+
+[component.kv-explorer.variables]
+kv_credentials = "{{ kv_explorer_user }}:{{ kv_explorer_password }}"
+
+[variables]
+kv_explorer_user = { required = true }
+kv_explorer_password = { required = true }
+
+[[trigger.http]]
+route = "/..."
+component = "ui"
+
+[component.ui]
+source = { url = "https://github.com/fermyon/spin-fileserver/releases/download/v0.3.0/spin_static_fs.wasm", digest = "sha256:ef88708817e107bf49985c7cefe4dd1f199bf26f6727819183d5c996baa3d148" }
+files = [{ source = "assets", destination = "/" }]
